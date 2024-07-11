@@ -1,3 +1,3 @@
 - **Workbook1**: Intro to tensors, how to define them, how to initialize them and attributes of tensors
 - **Workbook2**: Slicing + Indexing + Math functions
-- **Workbook3**:
+- **Workbook3**: BUilding a simple deep learning model using the CIFAR10 dataset
