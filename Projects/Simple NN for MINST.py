@@ -72,17 +72,38 @@ preds=model(X_test)
 print(preds[0])
 
 #now lets construct a datattframe
-_, predictionlabel=torch.max(preds.data,1)
+_, predictionlabel=torch.max(preds.data,1)   #_ means that if the function is returning certain values then we wish to ignore the first value and keep only the first one
+#preds= is our tensor containg the model's ooutputs
+#preds.data= instead we should use .detach() explanation in the end
+#1=look at secomnd dimension
+#.max()= find the maximum value along the certain dimension
 predictionlabel=predictionlabel.tolist()
 
 predictionlabel=pd.Series(predictionlabel)
 test_lables=pd.Series(test_lables)
-
-pred_table=pd.concat([predictionlabel,test_lables],axis=1)
-pred_table.columns=['Predicted value', 'TRue Value']
+#simply convert above stuff to series
+pred_table=pd.concat([predictionlabel,test_lables],axis=1) #a 2d list containg two lists
+pred_table.columns=['Predicted value', 'TRue Value'] #sets the column values 
 print(pred_table.head(10))
+#A simple table is printed no biggie
 
 #lets evaluate our model
-preds=len(predictionlabel)
-correct=len([1 for x,y in zip(predictionlabel, test_lables) if x==y])
-print((correct/preds)*100)
+preds=len(predictionlabel) #length of prediction label series
+correct=len([1 for x,y in zip(predictionlabel, test_lables) if x==y])  #zip combines the prediction label and the test labels into pairs
+#let x=prediction label, y=test labels and iterate over these pairs and if x==y then add 1 to the list
+#NOw elts print accuracy
+print((correct/preds)*100) #Computes the accuracy as a fraction of correct predictions to total predictions.
+
+
+
+
+## .DATA / .DETACH() EXPLANATION
+#tensor = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+
+# Perform operations
+#result = tensor * 2
+
+# Detach the result to access raw data without gradient tracking
+#detached_result = result.detach()
+
+#print(detached_result)  # Output: tensor([2.0, 4.0, 6.0])
